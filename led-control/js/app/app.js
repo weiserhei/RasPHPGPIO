@@ -10,6 +10,7 @@ define([
     "controls",
     "stats",
     "LED",
+    "RGBLED",
     "particles"
 ], function ( 
              THREE,
@@ -19,10 +20,13 @@ define([
              controls, 
              stats, 
              LED,
+             RGBLED,
              particles
              ) {
 	
 	'use strict';
+
+	var rgbLED;
 
 	// Start program
     var initialize = function () {
@@ -56,8 +60,8 @@ define([
 				normalMap: T_wood_n, 
 				normalScale: new THREE.Vector2( -1, -1 ),
 				side: THREE.BackSide, 
-				metalness : 1, 
-				roughness: 0.8,
+				metalness : 0.0, 
+				roughness: 0.6,
 			} );
 
 		var roomGeometry = new THREE.BoxGeometry( 5, 2.6, 5 );
@@ -71,18 +75,21 @@ define([
 		littleCube.position.set( 0.2, -0.45, 1 );
 		littleCube.rotation.y = 30 * Math.PI / 180;
 
-		var directionalLight = new THREE.DirectionalLight( 0xFFFFFF, 0.2 );
+		var directionalLight = new THREE.DirectionalLight( 0xFFFFFF, 0.1 );
 		directionalLight.position.set( 0, 1, -2 );
 		scene.add( directionalLight );
 		
 		var LED1 = new LED( 0xFF0000 );
-		LED1.setPosition( 1, 0, 0 );
+		LED1.setPosition( -1, 0, 0 );
 		
 		var LED2 = new LED( 0xFFFF00 );
-		LED2.setPosition( 0, 0, 0 );
+		LED2.setPosition( 0, 0, 1 );
 
 		var LED3 = new LED( 0x00FF00 );
-		LED3.setPosition( -1, 0, 0 );
+		LED3.setPosition( 1, 0, 0 );
+
+		rgbLED = new RGBLED( 0xFFFFFF );
+		rgbLED.setPosition( 0, 0, -1 );
 
 
 		// set Reset Values
@@ -97,6 +104,8 @@ define([
 
 		controls.update();
 		stats.update();
+
+		rgbLED.update( camera );
 
 		particles.tick();
 

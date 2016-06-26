@@ -16,9 +16,9 @@ define([
 
 	function LED( color ) {
 
-		this.intensity = 1.2;
+		this.intensity = 1.0;
 		// var intensity = 0;
-		var distance = 3;
+		var distance = 2;
 		var decay = 1;
 
 		var self = this;
@@ -31,7 +31,7 @@ define([
 		scene.add( this.light );
 		
 		var sphereMaterial = new THREE.MeshStandardMaterial( { transparent: true, opacity: 0.8, emissive: this.light.color, color: this.light.color, wireframe: false } );
-		this.sphere = new THREE.Mesh( new THREE.SphereGeometry( 0.2, 16, 16 ), sphereMaterial );
+		this.sphere = new THREE.Mesh( new THREE.SphereGeometry( 0.2, 32, 16 ), sphereMaterial );
 		scene.add( this.sphere );
 		this.sphere.position.copy( this.light.position );
 
@@ -64,18 +64,16 @@ define([
 		var intensity = this.state ? this.intensity : 0;
 		this.light.intensity = intensity;
 
-		// TODO
-		// change visual of orb when turned off?
-
-		// var color = new THREE.Color( response.color );
-
 		if ( intensity === 0 ) {
 			particles.setDirection( -1 );
-		// 	this.sphere.material.emissive.setHex( 0x000000 );
-		// 	// this.sphere.material.shininess = 0;
+			this.sphere.material.emissive.setHex( 0x000000 );
+			// this.sphere.material.shininess = 0;
+			// this.sphere.material.color.setHex( 0x000000 );
+
 		} else {
 			particles.setDirection( 1 );
-		// 	this.sphere.material.emissive.setHex( response.color );
+			// this.sphere.material.color.setHex( this.color );
+			this.sphere.material.emissive.setHex( response.color );
 		}
 		particles.setColor( this.color, this.color );
 		// particles.setColor( this.color, 0xAAFF00 );

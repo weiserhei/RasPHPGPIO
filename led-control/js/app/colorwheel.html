@@ -1,0 +1,29 @@
+<html>
+<style type="text/css">
+
+	/* Simulating interactivity */
+	.shape {
+	  opacity: 0.6;
+	  -webkit-transition: opacity 0.3s;
+	  transition: opacity 0.3s;
+	}
+
+	.shape:hover {
+	  opacity: 1;
+	}
+
+</style>
+<body>
+<!-- Donut/Ring reference, StackOverflow source: http://stackoverflow.com/questions/8193675/draw-a-hollow-circle-in-svg/8199621#8199621 -->
+<svg id="svgcontainer" xmlns="http://www.w3.org/2000/svg" version="1.1" width="800px" height="800px">
+
+ <defs>
+   <radialGradient id="radial" fx="50%" fy="50%" cx="50%" cy="50%" r="75%">
+     <stop offset="0%"   stop-color="#05a" stop-opacity="1"/>
+     <stop offset="100%" stop-color="#0a5" stop-opacity="1" />
+   </radialGradient>
+   
+ </defs>
+<!-- <path id="donutSegment0" class="shape" d="M0,0" /> -->
+</svg>
+</body>

@@ -10,37 +10,47 @@
 		$color = $_POST["color"];
 		$state = $_POST["state"];
 		
-		
 		$red = 4;
 		$yellow = 17;
 		$green = 27;
 
-		// setMode( $red );
-		// setMode( $yellow );
-		// setMode( $green );
+		$RGB = [16, 20, 21];
 
-
-		$clicked = null;
 		// Match pin to color
 		//-------------------
 		// convert decimal color to hex-string
-		$hexColor = dechex( $color );
-		switch( $hexColor ) {
+		if ( is_array( $color ) ) {
 
-			case "ff0000":
-				$clicked = $red;
-				break;
-			case "ffff00":
-				$clicked = $yellow;
-				break;
-			case "ff00":
-				$clicked = $green;
-				break;
+			foreach ( $color as $key => $on_off ) {
+
+				setMode( $RGB[ $key ], "out" );
+				setWrite( $RGB[ $key ], $on_off );
+
+			}
+
+		} else {
+
+			$clicked = null;
+			$hexColor = dechex( $color );
+			switch( $hexColor ) {
+
+				case "ff0000":
+					$clicked = $red;
+					break;
+				case "ffff00":
+					$clicked = $yellow;
+					break;
+				case "ff00":
+					$clicked = $green;
+					break;
+
+			}
+
+			setMode( $clicked, "out" );
+			setWrite( $clicked, $state );
 
 		}
 
-		setMode( $clicked, "out" );
-		setWrite( $clicked, $state );
 
 		echo json_encode( $_POST );
 
